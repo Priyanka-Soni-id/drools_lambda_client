@@ -1,4 +1,5 @@
-require 'json'
+require "json"
+require "spec_helper"
 
 RSpec.describe DroolsLambdaClient do
 
