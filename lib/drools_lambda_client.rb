@@ -7,10 +7,14 @@ module DroolsLambdaClient
 
   def execute!(data_hash:, namespace:, lambda_function:)
     response = LambdaClient.invoke(
-      lambda_function,
-      hash_to_drools(data_hash: data_hash, namespace: namespace).to_json
-    ).payload.read
-    drools_to_hash(response_data: JSON.parse(response, symbolize_names: true))
+        lambda_function,
+        hash_to_drools(data_hash: data_hash, namespace: namespace).to_json
+      ).payload.read
+    begin 
+      drools_to_hash(response_data: JSON.parse(response, symbolize_names: true))
+    rescue => ex
+      raise "#{response}---#{ex}"
+    end  
   end
 
   private
